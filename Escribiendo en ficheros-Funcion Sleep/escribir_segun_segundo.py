@@ -27,9 +27,8 @@ def segundo_actual(hora):
 def sacar_frase():
     while True:
         hora_actual = datetime.datetime.now()
-        seg_actual = segundo_actual(hora_actual)
-        numero = random.randint(0, len(frases[seg_actual]) - 1)
-        print(frases[seg_actual][numero])
+        numero = random.randint(0, len(frases[segundo_actual(hora_actual)]) - 1)
+        print(frases[segundo_actual(hora_actual)][numero])
         sleep(1)
 
 print(sacar_frase())
