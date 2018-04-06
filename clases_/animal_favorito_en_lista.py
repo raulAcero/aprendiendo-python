@@ -3,7 +3,7 @@
 """
 
 
-class dog:
+class Dog:
     def __init__(self, name, color, breed):
         self.name = name
         self.color = color
@@ -11,9 +11,9 @@ class dog:
 
 
 def main():
-    dog1 = dog("Bobby", "gris", "labrador")
-    dog2 = dog("Canelo", "marron", "perro de agua")
-    dog3 = dog("Jack", "negro y blanco", "golden retriever")
+    dog1 = Dog("Bobby", "gris", "labrador")
+    dog2 = Dog("Canelo", "marron", "perro de agua")
+    dog3 = Dog("Jack", "negro y blanco", "golden retriever")
     my_dogs = [dog1, dog2, dog3]
     print("Tengo {} perros".format(len(my_dogs)))
     for i in my_dogs:
