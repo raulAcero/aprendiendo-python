@@ -1,17 +1,34 @@
 import random
+from tkinter import Tk, ttk
+
+from PIL import ImageTk, Image
 
 
 class Card:
+
+    number_name_mapping = {
+        1: "ace",
+        11: "jack",
+        12: "queen",
+        13: "king",
+    }
+    card_image_path = "./assets/png/"
+
     def __init__(self, number, suit):
         self.number = number
         self.suit = suit
+        self.tk_img = ImageTk.PhotoImage(Image.open(self.get_card_image_path()))
+
+    def get_card_image_path(self):
+        return "{}{}_of_{}.png".format(self.card_image_path, self.number_name_mapping.get(self.number, self.number),
+                                       self.suit)
 
     def __str__(self):
         return "{} of {}".format(self.number, self.suit)
 
 
 class Deck:
-    suits = ["Diamonds", "Hearts", "Spades", "Clubs"]
+    suits = ["diamonds", "hearts", "spades", "clubs"]
     max_number = 13
 
     def __init__(self):
@@ -47,6 +64,7 @@ class Game:
     def __init__(self):
         self.deck = Deck()
         self.players = []
+        self.ui_root = Tk()
         self.table_cards = []
 
     def ask_player_name(self, player_n):
@@ -78,6 +96,13 @@ class Game:
         print("\nTurno de {}\n".format(player.name))
 
     def play(self):
+        card_frame = ttk.Frame(self.ui_root, padding="30 12 30 12")
+        card_frame.grid()
+
+        for a in range(10):
+            card = self.deck.give_random_card()
+            ttk.Label(card_frame, image=card.tk_img).grid(column=a+1, row=1)
+        self.ui_root.mainloop()
 
         for i in range(self.n_players):
             self.players.append(Player(self.ask_player_name(i + 1)))
