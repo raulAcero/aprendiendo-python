@@ -1,8 +1,6 @@
 import random
 from tkinter import Tk, ttk
-
 from PIL import ImageTk, Image
-
 
 class Card:
 
@@ -33,6 +31,7 @@ class Deck:
 
     def __init__(self):
         self.cards = []
+        self.used_cards = []
 
         for suit in self.suits:
             for number in range(1, self.max_number + 1):
@@ -40,10 +39,10 @@ class Deck:
 
     def give_random_card(self):
         position = random.randint(1, len(self.cards))
-        random_card = self.cards.pop(position)
+        chosen_card = self.cards.pop(position)
+        self.used_cards.append(chosen_card)
         try:
-            print("{} of {}".format(random_card.number, random_card.suit))
-            return random_card
+            return chosen_card
         except IndexError:
             print("Se acabó")
 
@@ -98,10 +97,14 @@ class Game:
     def play(self):
         card_frame = ttk.Frame(self.ui_root, padding="30 12 30 12")
         card_frame.grid()
+        number_of_cards_per_row = 5
 
-        for a in range(10):
+        for card_n in range(10):
             card = self.deck.give_random_card()
-            ttk.Label(card_frame, image=card.tk_img).grid(column=a+1, row=1)
+            row = int(a / number_of_cards_per_row)
+
+            ttk.Label(card_frame, image=card.tk_img).grid(column=card_n%number_of_cards_per_row, row=row)
+
         self.ui_root.mainloop()
 
         for i in range(self.n_players):
